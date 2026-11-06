@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block title %}Cotizador de Arriendo | TechRental & Build{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <h1 class="h3 fw-bold mb-1"><i class="bi bi-calculator text-warning me-2"></i>Cotización de Arriendo de Flota TI</h1>
+    <p class="text-muted small">Simulación transitoria de costos por días de uso, IVA y garantía reembolsable.</p>
+</div>
+
+{% if esta_vacio %}
+<div class="card border-0 shadow-sm rounded-4 text-center py-5 bg-white">
+    <div class="card-body py-5">
+        <i class="bi bi-laptop-fill text-muted display-1 mb-3"></i>
+        <h3 class="fw-bold text-secondary">No hay equipos agregados a la cotización</h3>
+        <p class="text-muted mb-4">Explora nuestro catálogo para armar la propuesta de arriendo o leasing para tu empresa.</p>
+        <a href="{% url 'inventario:lista' %}" class="btn btn-warning px-4 py-2 fw-bold text-dark">
+            <i class="bi bi-grid-3x3-gap me-2"></i>Ver Catálogo de Equipos
+        </a>
+    </div>
+</div>
+{% else %}
+<div class="row g-4">
+    <!-- Tabla de Ítems en Sesión -->
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-3 bg-white">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col" style="width: 70px;">Foto</th>
+                            <th scope="col">Equipo / SKU</th>
+                            <th scope="col">Tarifa/Día</th>
+                            <th scope="col" class="text-center" style="width: 130px;">Días</th>
+                            <th scope="col" class="text-end">Subtotal</th>
+                            <th scope="col" class="text-end" style="width: 50px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items_cotizacion %}
+                        <tr>
+                            <td>
+                                {% if item.imagen_url %}
+                                    <img src="{{ item.imagen_url }}" alt="{{ item.nombre }}" class="rounded border" style="width: 48px; height: 48px; object-fit: cover;">
+                                {% else %}
+                                    <div class="bg-light rounded border text-center d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                                        <i class="bi bi-cpu text-muted"></i>
+                                    </div>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{% url 'inventario:detalle' item.slug %}" class="fw-bold text-dark text-decoration-none">
+                                    {{ item.nombre }}
+                                </a>
+                                <small class="text-muted d-block">SKU: {{ item.sku }} | Cant: {{ item.cantidad }} un.</small>
+                            </td>
+                            <td class="text-muted">${{ item.tarifa_diaria|floatformat:0 }} CLP</td>
+                            <td class="text-center">
+                                <div class="btn-group btn-group-sm border rounded">
+                                    <a href="{% url 'cotizaciones:modificar_dias' item.id 'restar_dia' %}" class="btn btn-light px-2">-</a>
+                                    <span class="btn btn-light disabled text-dark fw-bold px-3">{{ item.dias }}d</span>
+                                    <a href="{% url 'cotizaciones:modificar_dias' item.id 'sumar_dia' %}" class="btn btn-light px-2">+</a>
+                                </div>
+                            </td>
+                            <td class="text-end fw-bold text-dark">${{ item.subtotal|floatformat:0 }} CLP</td>
+                            <td class="text-end">
+                                <a href="{% url 'cotizaciones:eliminar' item.id %}" class="text-danger" title="Eliminar equipo">
+                                    <i class="bi bi-trash fs-5"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-footer bg-white p-3 d-flex justify-content-between align-items-center">
+                <a href="{% url 'inventario:lista' %}" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-arrow-left me-1"></i>Seguir Agregando Equipos
+                </a>
+                <a href="{% url 'cotizaciones:limpiar' %}" class="btn btn-outline-danger btn-sm" onclick="return confirm('¿Deseas vaciar la cotización actual?');">
+                    <i class="bi bi-trash me-1"></i>Vaciar Cotizador
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Desglose Económico Exigido por la Pauta -->
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+            <h5 class="fw-bold mb-3"><i class="bi bi-receipt me-2 text-warning"></i>Resumen de Presupuesto</h5>
+
+            <div class="d-flex justify-content-between text-muted mb-2">
+                <span>Subtotal Arriendo:</span>
+                <span>${{ subtotal_arriendo|floatformat:0 }} CLP</span>
+            </div>
+            <div class="d-flex justify-content-between text-muted mb-2">
+                <span>Garantía Reembolsable:</span>
+                <span>${{ total_garantia|floatformat:0 }} CLP</span>
+            </div>
+            <div class="d-flex justify-content-between text-muted mb-3">
+                <span>IVA (19% Legal):</span>
+                <span>${{ iva|floatformat:0 }} CLP</span>
+            </div>
+
+            <hr>
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <span class="fs-5 fw-bold text-dark">Total Estimado:</span>
+                <span class="fs-4 fw-bold text-dark">${{ total_final|floatformat:0 }} CLP</span>
+            </div>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'cotizaciones:comprobante' %}" class="btn btn-warning w-100 py-3 fw-bold text-dark shadow-sm">
+                    <i class="bi bi-file-earmark-pdf me-2"></i>Generar Solicitud de Arriendo
+                </a>
+            {% else %}
+                <div class="alert alert-warning small mb-3">
+                    <i class="bi bi-info-circle me-1"></i>Inicia sesión con tu cuenta de empresa para emitir la solicitud.
+                </div>
+                <a href="{% url 'usuarios:login' %}?next={% url 'cotizaciones:comprobante' %}" class="btn btn-warning w-100 py-3 fw-bold text-dark">
+                    <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión para Reservar
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
