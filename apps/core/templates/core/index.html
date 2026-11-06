@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}TechRental & Build | Cotizador de Arriendo Informático{% endblock %}
+{% block title %}TechRental & Build | Cotizador de Arriendo y Armado de PCs{% endblock %}
 
 {% block content %}
 <!-- Banner Hero Principal -->
@@ -8,18 +8,18 @@
     <div class="row align-items-center">
         <div class="col-lg-8">
             <span class="badge bg-warning text-dark px-3 py-2 fw-bold mb-3 fs-6">
-                <i class="bi bi-lightning-charge-fill me-1"></i>Leasing e Infraestructura TI
+                <i class="bi bi-lightning-charge-fill me-1"></i>Arriendo de Equipos y PCs a Medida
             </span>
-            <h1 class="display-4 fw-bold mb-3">Arriendo de Flotas y Armado de Equipos a Medida</h1>
+            <h1 class="display-4 fw-bold mb-3">Arrienda el PC o Laptop que Necesitas por los Días que Quieras</h1>
             <p class="lead text-light opacity-75 mb-4">
-                Workstations de alto rendimiento, laptops portátiles, servidores y componentes para empresas. Cotiza por días o meses con garantía y valorización automática de IVA.
+                Ya sea para estudiar, jugar, trabajar en tus proyectos o equipar tu empresa. Cotiza notebooks, estaciones de trabajo o PCs ensamblados a medida con cálculo automático de días, IVA y garantía.
             </p>
             <div class="d-flex flex-wrap gap-2">
                 <a href="{% url 'inventario:lista' %}" class="btn btn-warning btn-lg fw-bold px-4 text-dark">
-                    <i class="bi bi-calculator me-2"></i>Ir al Cotizador de Flota
+                    <i class="bi bi-calculator me-2"></i>Ver Catálogo y Cotizar
                 </a>
                 <a href="{% url 'core:nosotros' %}" class="btn btn-outline-light btn-lg px-4">
-                    <i class="bi bi-info-circle me-2"></i>Sobre Nuestro Servicio
+                    <i class="bi bi-info-circle me-2"></i>Conócenos
                 </a>
             </div>
         </div>
@@ -33,23 +33,23 @@
 <div class="row g-3 mb-5 text-center">
     <div class="col-md-4">
         <div class="p-4 bg-white rounded-3 shadow-sm border h-100">
-            <i class="bi bi-shield-check text-success display-5 mb-2"></i>
-            <h5 class="fw-bold mb-1">Equipos Homologados</h5>
-            <p class="text-muted small mb-0">Hardware probado y testeado para trabajo exigente.</p>
+            <i class="bi bi-controller text-warning display-5 mb-2"></i>
+            <h5 class="fw-bold mb-1">Para Personas y Gamers</h5>
+            <p class="text-muted small mb-0">Arrienda PCs potentes o notebooks para jugar, estudiar o realizar tus entregas académicas.</p>
         </div>
     </div>
     <div class="col-md-4">
         <div class="p-4 bg-white rounded-3 shadow-sm border h-100">
-            <i class="bi bi-clock-history text-primary display-5 mb-2"></i>
-            <h5 class="fw-bold mb-1">Flexibilidad por Días</h5>
-            <p class="text-muted small mb-0">Calcula la tarifa según los días exactos que durará tu proyecto.</p>
+            <i class="bi bi-tools text-primary display-5 mb-2"></i>
+            <h5 class="fw-bold mb-1">Armado a Medida</h5>
+            <p class="text-muted small mb-0">Elige equipos ensamblados a pedido según la potencia que requiera tu proyecto.</p>
         </div>
     </div>
     <div class="col-md-4">
         <div class="p-4 bg-white rounded-3 shadow-sm border h-100">
-            <i class="bi bi-receipt-cutoff text-warning display-5 mb-2"></i>
-            <h5 class="fw-bold mb-1">Cálculo de IVA y Garantía</h5>
-            <p class="text-muted small mb-0">Desglose transparente del 19% de IVA y garantías reembolsables.</p>
+            <i class="bi bi-calendar-check text-success display-5 mb-2"></i>
+            <h5 class="fw-bold mb-1">Transparencia por Días</h5>
+            <p class="text-muted small mb-0">Calcula la tarifa según el tiempo exacto que utilizarás el equipo, con IVA y garantía.</p>
         </div>
     </div>
 </div>

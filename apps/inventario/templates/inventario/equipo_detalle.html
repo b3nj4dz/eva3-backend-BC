@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ equipo.nombre }} | TechRental & Build{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <!-- Breadcrumb -->
+    <div class="col-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'core:inicio' %}" class="text-decoration-none">Inicio</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'inventario:lista' %}" class="text-decoration-none">Catálogo</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ equipo.nombre }}</li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- Imagen Principal -->
+    <div class="col-lg-6">
+        <div class="card border shadow-sm rounded-4 overflow-hidden bg-white text-center p-4">
+            {% if equipo.imagen %}
+                <img src="{{ equipo.imagen.url }}" alt="{{ equipo.nombre }}" class="img-fluid mx-auto" style="max-height: 380px; object-fit: contain;">
+            {% else %}
+                <div class="py-5">
+                    <i class="bi bi-laptop text-muted display-1"></i>
+                    <p class="text-muted mt-2">Fotografía no disponible</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Ficha Técnica y Modalidades -->
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100 d-flex flex-column justify-content-between">
+            <div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="badge bg-dark text-warning fs-6">{{ equipo.categoria.nombre }}</span>
+                    <span class="text-muted fw-bold">SKU: {{ equipo.codigo_sku }}</span>
+                </div>
+
+                <h1 class="h3 fw-bold text-dark mb-3">{{ equipo.nombre }}</h1>
+
+                <div class="bg-light rounded-3 p-3 mb-4">
+                    <h6 class="fw-bold text-secondary mb-2"><i class="bi bi-cpu me-2 text-warning"></i>Especificaciones Técnicas:</h6>
+                    <p class="mb-0 text-dark lh-base" style="white-space: pre-line;">{{ equipo.especificaciones }}</p>
+                </div>
+
+                <!-- Precios según Modalidad -->
+                <div class="row g-3 mb-4">
+                    <div class="col-6">
+                        <div class="border rounded-3 p-3 text-center bg-white">
+                            <small class="text-muted d-block fw-semibold">Arriendo por Día</small>
+                            <span class="fs-4 fw-bold text-dark">{{ equipo.precio_formateado }} CLP</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="border rounded-3 p-3 text-center bg-white">
+                            <small class="text-muted d-block fw-semibold">Venta Directa</small>
+                            <span class="fs-4 fw-bold text-success">${{ equipo.precio_venta|floatformat:0 }} CLP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center gap-2 mb-4">
+                    <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 fs-6">
+                        <i class="bi bi-check-circle me-1"></i>Stock Disponible: {{ equipo.stock }} unidades
+                    </span>
+                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 fs-6">
+                        Estado: {{ equipo.estado }}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Botones de Acción (Arriendo vs Venta) -->
+            <div class="d-grid gap-2">
+                <a href="{% url 'cotizaciones:agregar' equipo.id %}?modalidad=arriendo" class="btn btn-warning btn-lg fw-bold text-dark py-2">
+                    <i class="bi bi-clock-history me-2"></i>Cotizar Arriendo por Días
+                </a>
+                <a href="{% url 'cotizaciones:agregar' equipo.id %}?modalidad=venta" class="btn btn-success btn-lg fw-bold text-white py-2">
+                    <i class="bi bi-bag-check me-2"></i>Comprar Equipo Directo
+                </a>
+                <a href="{% url 'inventario:lista' %}" class="btn btn-outline-secondary btn-sm mt-1">
+                    <i class="bi bi-arrow-left me-1"></i>Volver al Catálogo
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Equipos Relacionados -->
+{% if relacionados %}
+<div class="mt-5">
+    <h4 class="fw-bold mb-3"><i class="bi bi-grid me-2 text-warning"></i>Otros Equipos de la Misma Categoría</h4>
+    <div class="row g-3">
+        {% for rel in relacionados %}
+        <div class="col-md-4">
+            <div class="card h-100 border shadow-sm bg-white p-3">
+                <h6 class="fw-bold mb-1 text-truncate">{{ rel.nombre }}</h6>
+                <small class="text-muted d-block mb-2">{{ rel.codigo_sku }}</small>
+                <div class="d-flex justify-content-between align-items-center mt-auto pt-2 border-top">
+                    <span class="fw-bold text-dark">{{ rel.precio_formateado }} CLP/día</span>
+                    <a href="{% url 'inventario:detalle' rel.slug %}" class="btn btn-sm btn-outline-dark">Ver Ficha</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

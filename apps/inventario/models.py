@@ -30,6 +30,7 @@ class EquipoInformatico(models.Model):
         ('DISPONIBLE', 'Disponible'),
         ('EN_ARRIENDO', 'En Arriendo / Cotizado'),
         ('MANTENCION', 'En Mantenimiento'),
+        
     ]
 
     codigo_sku = models.CharField(max_length=50, unique=True, verbose_name="Código SKU / Identificador")
@@ -44,6 +45,15 @@ class EquipoInformatico(models.Model):
         validators=[MinValueValidator(0)], 
         verbose_name="Tarifa de Arriendo Diaria (CLP)"
     )
+
+    precio_venta = models.DecimalField(
+        max_digits=10, 
+        decimal_places=0, 
+        validators=[MinValueValidator(0)], 
+        default=0,
+        verbose_name="Precio de Venta Directa (CLP)"
+    )
+
     monto_garantia = models.DecimalField(
         max_digits=10, 
         decimal_places=0, 
