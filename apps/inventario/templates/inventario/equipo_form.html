@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if form.instance.pk %}Editar Equipo{% else %}Ingresar Nuevo Equipo{% endif %} | TechRental & Build{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+            <div class="bg-dark text-white p-4 text-center">
+                <i class="bi bi-laptop-fill text-warning display-4 mb-2"></i>
+                <h1 class="h3 fw-bold mb-1">
+                    {% if form.instance.pk %}
+                        Editar Equipo: {{ form.instance.nombre }}
+                    {% else %}
+                        Ingresar Nuevo Equipo al Inventario
+                    {% endif %}
+                </h1>
+                <p class="text-muted small mb-0">Formulario administrativo para gestión de equipos y precios</p>
+            </div>
+
+            <div class="card-body p-4 p-md-5">
+                <form method="post" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger py-2 small mb-4">
+                            {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div class="row g-3">
+                        <!-- Código SKU -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Código SKU *</label>
+                            {{ form.codigo_sku }}
+                            {% if form.codigo_sku.errors %}
+                                <div class="text-danger small mt-1">{% for error in form.codigo_sku.errors %}{{ error }}{% endfor %}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Categoría -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Categoría *</label>
+                            {{ form.categoria }}
+                            {% if form.categoria.errors %}
+                                <div class="text-danger small mt-1">{% for error in form.categoria.errors %}{{ error }}{% endfor %}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Nombre -->
+                        <div class="col-12">
+                            <label class="form-label fw-semibold">Nombre del Equipo / Modelo *</label>
+                            {{ form.nombre }}
+                            {% if form.nombre.errors %}
+                                <div class="text-danger small mt-1">{% for error in form.nombre.errors %}{{ error }}{% endfor %}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Especificaciones -->
+                        <div class="col-12">
+                            <label class="form-label fw-semibold">Especificaciones Técnicas *</label>
+                            {{ form.especificaciones }}
+                            {% if form.especificaciones.errors %}
+                                <div class="text-danger small mt-1">{% for error in form.especificaciones.errors %}{{ error }}{% endfor %}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Precios y Garantía -->
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Tarifa Diaria Arriendo (CLP) *</label>
+                            {{ form.tarifa_diaria }}
+                            {% if form.tarifa_diaria.errors %}
+                                <div class="text-danger small mt-1">{% for error in form.tarifa_diaria.errors %}{{ error }}{% endfor %}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Precio Venta Directa (CLP) *</label>
+                            {{ form.precio_venta }}
+                            {% if form.precio_venta.errors %}
+                                <div class="text-danger small mt-1">{% for error in form.precio_venta.errors %}{{ error }}{% endfor %}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Garantía Reembolsable (CLP) *</label>
+                            {{ form.monto_garantia }}
+                            {% if form.monto_garantia.errors %}
+                                <div class="text-danger small mt-1">{% for error in form.monto_garantia.errors %}{{ error }}{% endfor %}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Stock y Estado -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Stock Disponible *</label>
+                            {{ form.stock }}
+                            {% if form.stock.errors %}
+                                <div class="text-danger small mt-1">{% for error in form.stock.errors %}{{ error }}{% endfor %}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Estado Operativo *</label>
+                            {{ form.estado }}
+                            {% if form.estado.errors %}
+                                <div class="text-danger small mt-1">{% for error in form.estado.errors %}{{ error }}{% endfor %}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Imagen -->
+                        <div class="col-12">
+                            <label class="form-label fw-semibold">Fotografía del Equipo</label>
+                            {{ form.imagen }}
+                            {% if form.imagen.errors %}
+                                <div class="text-danger small mt-1">{% for error in form.imagen.errors %}{{ error }}{% endfor %}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Checkboxes: Destacado y Activo -->
+                        <div class="col-md-6">
+                            <div class="form-check mt-2">
+                                {{ form.destacado }}
+                                <label class="form-check-label fw-semibold" for="{{ form.destacado.id_for_label }}">
+                                    Destacar en Catálogo Principal
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-check mt-2">
+                                {{ form.activo }}
+                                <label class="form-check-label fw-semibold" for="{{ form.activo.id_for_label }}">
+                                    Equipo Activo (Baja Lógica)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'inventario:gestion' %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i>Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-warning px-4 fw-bold text-dark">
+                            <i class="bi bi-check-circle me-1"></i>Guardar Registro
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

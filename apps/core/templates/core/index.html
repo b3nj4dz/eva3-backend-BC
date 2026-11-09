@@ -4,27 +4,27 @@
 
 {% block content %}
 <!-- Banner Hero Principal -->
-<div class="p-5 mb-5 rounded-4 bg-dark text-white shadow">
+<div class="p-5 mb-5 rounded-4 bg-card text-white shadow border">
     <div class="row align-items-center">
         <div class="col-lg-8">
-            <span class="badge bg-warning text-dark px-3 py-2 fw-bold mb-3 fs-6">
-                <i class="bi bi-lightning-charge-fill me-1"></i>Arriendo de Equipos y PCs a Medida
+            <span class="badge bg-info text-dark px-3 py-2 fw-bold mb-3 fs-6">
+                <i class="bi bi-lightning-charge-fill me-1"></i>Arriendo y Venta de PCs a Medida
             </span>
-            <h1 class="display-4 fw-bold mb-3">Arrienda el PC o Laptop que Necesitas por los Días que Quieras</h1>
-            <p class="lead text-light opacity-75 mb-4">
+            <h1 class="display-4 fw-bold mb-3">Arrienda o Compra el PC o Laptop que Necesitas</h1>
+            <p class="lead text-muted opacity-75 mb-4">
                 Ya sea para estudiar, jugar, trabajar en tus proyectos o equipar tu empresa. Cotiza notebooks, estaciones de trabajo o PCs ensamblados a medida con cálculo automático de días, IVA y garantía.
             </p>
             <div class="d-flex flex-wrap gap-2">
-                <a href="{% url 'inventario:lista' %}" class="btn btn-warning btn-lg fw-bold px-4 text-dark">
+                <a href="{% url 'inventario:lista' %}" class="btn btn-primary btn-lg fw-bold px-4 text-dark">
                     <i class="bi bi-calculator me-2"></i>Ver Catálogo y Cotizar
                 </a>
-                <a href="{% url 'core:nosotros' %}" class="btn btn-outline-light btn-lg px-4">
+                <a href="{% url 'core:nosotros' %}" class="btn btn-outline-dark btn-lg px-4">
                     <i class="bi bi-info-circle me-2"></i>Conócenos
                 </a>
             </div>
         </div>
         <div class="col-lg-4 text-center d-none d-lg-block">
-            <i class="bi bi-cpu-fill text-warning opacity-75" style="font-size: 8rem;"></i>
+            <i class="bi bi-cpu-fill text-info opacity-75" style="font-size: 8rem;"></i>
         </div>
     </div>
 </div>
@@ -32,21 +32,21 @@
 <!-- Beneficios -->
 <div class="row g-3 mb-5 text-center">
     <div class="col-md-4">
-        <div class="p-4 bg-white rounded-3 shadow-sm border h-100">
-            <i class="bi bi-controller text-warning display-5 mb-2"></i>
+        <div class="p-4 bg-card rounded-3 shadow-sm border h-100">
+            <i class="bi bi-controller text-info display-5 mb-2"></i>
             <h5 class="fw-bold mb-1">Para Personas y Gamers</h5>
-            <p class="text-muted small mb-0">Arrienda PCs potentes o notebooks para jugar, estudiar o realizar tus entregas académicas.</p>
+            <p class="text-muted small mb-0">Arrienda o compra PCs potentes o notebooks para jugar, estudiar o realizar tus entregas académicas.</p>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="p-4 bg-white rounded-3 shadow-sm border h-100">
+        <div class="p-4 bg-card rounded-3 shadow-sm border h-100">
             <i class="bi bi-tools text-primary display-5 mb-2"></i>
             <h5 class="fw-bold mb-1">Armado a Medida</h5>
             <p class="text-muted small mb-0">Elige equipos ensamblados a pedido según la potencia que requiera tu proyecto.</p>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="p-4 bg-white rounded-3 shadow-sm border h-100">
+        <div class="p-4 bg-card rounded-3 shadow-sm border h-100">
             <i class="bi bi-calendar-check text-success display-5 mb-2"></i>
             <h5 class="fw-bold mb-1">Transparencia por Días</h5>
             <p class="text-muted small mb-0">Calcula la tarifa según el tiempo exacto que utilizarás el equipo, con IVA y garantía.</p>

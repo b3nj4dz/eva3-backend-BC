@@ -3,71 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}TechRental & Build{% endblock %}</title>
-    <!-- Bootstrap 5.3 CSS e Iconos -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-</head>
-<body class="bg-light d-flex flex-column min-vh-100">
+    <title>{% block title %}TechRental & Build | Soluciones Computacionales{% endblock %}</title>
 
-    <!-- Navbar Corporativo -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm py-3">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5.3 & Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <!-- Custom Tech-Dark Style Engine -->
+    <style>
+        :root {
+            --bg-main: #0f172a;
+            --bg-card: #1e293b;
+            --bg-card-hover: #334155;
+            --brand-primary: #06b6d4;
+            --brand-primary-hover: #0891b2;
+            --brand-accent: #3b82f6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar personalizada */
+        .navbar-tech {
+            background-color: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .navbar-brand-tech {
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #fff !important;
+        }
+
+        .navbar-brand-tech span {
+            color: var(--brand-primary);
+        }
+
+        .nav-link-tech {
+            color: var(--text-muted) !important;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link-tech:hover, .nav-link-tech.active {
+            color: var(--brand-primary) !important;
+        }
+
+        /* Rediseño general de tarjetas */
+        .card {
+            background-color: var(--bg-card) !important;
+            border: 1px solid var(--border-color) !important;
+            color: var(--text-main) !important;
+            border-radius: 1rem !important;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            border-color: var(--brand-primary) !important;
+            box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.15) !important;
+        }
+
+        /* Ajustes de texto en tarjetas y modales */
+        .text-muted, .text-secondary {
+            color: var(--text-muted) !important;
+        }
+
+        .text-dark {
+            color: var(--text-main) !important;
+        }
+
+        .bg-white, .bg-light {
+            background-color: var(--bg-card) !important;
+        }
+
+        /* Botones personalizados */
+        .btn-warning, .btn-primary {
+            background-color: var(--brand-primary) !important;
+            border-color: var(--brand-primary) !important;
+            color: #0f172a !important;
+            font-weight: 700;
+            border-radius: 0.75rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-warning:hover, .btn-primary:hover {
+            background-color: var(--brand-primary-hover) !important;
+            border-color: var(--brand-primary-hover) !important;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+        }
+
+        .btn-outline-dark, .btn-outline-secondary {
+            border-color: var(--border-color) !important;
+            color: var(--text-main) !important;
+            border-radius: 0.75rem;
+        }
+
+        .btn-outline-dark:hover, .btn-outline-secondary:hover {
+            background-color: var(--bg-card-hover) !important;
+            border-color: var(--brand-primary) !important;
+            color: var(--brand-primary) !important;
+        }
+
+        /* Tablas oscuras */
+        .table {
+            color: var(--text-main) !important;
+            --bs-table-bg: transparent;
+            --bs-table-border-color: var(--border-color);
+        }
+
+        .table-dark {
+            --bs-table-bg: #0f172a;
+        }
+
+        /* Formularios oscuros */
+        .form-control, .form-select {
+            background-color: #0f172a !important;
+            border: 1px solid var(--border-color) !important;
+            color: var(--text-main) !important;
+            border-radius: 0.75rem;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--brand-primary) !important;
+            box-shadow: 0 0 0 0.25rem rgba(6, 182, 212, 0.25) !important;
+        }
+
+        /* Insignias / Badges */
+        .badge.bg-light {
+            background-color: #0f172a !important;
+            color: var(--brand-primary) !important;
+            border: 1px solid var(--border-color);
+        }
+
+        .badge.bg-warning {
+            background-color: var(--brand-primary) !important;
+            color: #0f172a !important;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            background-color: #0b1120;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navegación Superior -->
+    <nav class="navbar navbar-expand-lg navbar-tech sticky-top py-3">
         <div class="container">
-            <a class="navbar-brand fw-bold text-warning fs-4" href="{% url 'core:inicio' %}">
-                <i class="bi bi-cpu-fill me-2"></i>TechRental & Build
+            <a class="navbar-brand navbar-brand-tech fs-4" href="{% url 'core:inicio' %}">
+                <i class="bi bi-cpu-fill me-2" style="color: var(--brand-primary);"></i>TechRental<span>&Build</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
-                <span class="navbar-toggler-icon"></span>
+            
+            <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+                <i class="bi bi-list fs-2"></i>
             </button>
-            <div class="collapse navbar-collapse" id="menu">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'core:inicio' %}">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'inventario:lista' %}">Catálogo de Equipos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'core:nosotros' %}">Nosotros</a></li>
-                    {% if user.is_staff %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-info fw-semibold" href="#" data-bs-toggle="dropdown">
-                            <i class="bi bi-shield-lock me-1"></i>Backoffice
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{% url 'inventario:gestion' %}">Gestión de Inventario</a></li>
-                            <li><a class="dropdown-item" href="{% url 'inventario:crear' %}">Nuevo Equipo</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="/admin/" target="_blank">Django Admin</a></li>
-                        </ul>
+
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-tech" href="{% url 'core:inicio' %}">Inicio</a>
                     </li>
-                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-tech" href="{% url 'inventario:lista' %}">Catálogo de Equipos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-tech" href="{% url 'core:nosotros' %}">Nosotros</a>
+                    </li>
                 </ul>
+
                 <div class="d-flex align-items-center gap-3">
-                    <!-- Botón Cotizador de Sesión -->
-                    <a href="{% url 'cotizaciones:ver' %}" class="btn btn-outline-warning position-relative">
-                        <i class="bi bi-calculator me-1"></i>Cotización
-                        {% if cotizacion_total_items > 0 %}
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                {{ cotizacion_total_items }}
+                    <!-- Botón Cotizador -->
+                    <a href="{% url 'cotizaciones:ver' %}" class="btn btn-outline-dark position-relative py-2 px-3">
+                        <i class="bi bi-calculator me-1 text-info"></i>Cotización
+                        {% if request.session.cotizacion %}
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info text-dark">
+                                {{ request.session.cotizacion|length }}
                             </span>
                         {% endif %}
                     </a>
 
                     {% if user.is_authenticated %}
-                        <a href="{% url 'usuarios:perfil' %}" class="btn btn-secondary btn-sm">{{ user.username }}</a>
-                        <a href="{% url 'usuarios:logout' %}" class="btn btn-outline-danger btn-sm">Salir</a>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-dark dropdown-toggle py-2 px-3" type="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle me-1 text-info"></i>{{ user.username }}
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end shadow">
+                                <li><a class="dropdown-item" href="{% url 'usuarios:perfil' %}"><i class="bi bi-person me-2"></i>Mi Cuenta</a></li>
+                                {% if user.is_staff %}
+                                    <li><a class="dropdown-item" href="{% url 'inventario:gestion' %}"><i class="bi bi-sliders me-2"></i>Gestión Inventario</a></li>
+                                {% endif %}
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="{% url 'usuarios:logout' %}"><i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</a></li>
+                            </ul>
+                        </div>
                     {% else %}
-                        <a href="{% url 'usuarios:login' %}" class="btn btn-outline-light btn-sm">Ingresar</a>
-                        <a href="{% url 'usuarios:registro' %}" class="btn btn-warning btn-sm fw-bold text-dark">Registrarse</a>
+                        <a href="{% url 'usuarios:login' %}" class="btn btn-outline-dark py-2 px-3">Ingresar</a>
+                        <a href="{% url 'usuarios:registro' %}" class="btn btn-primary py-2 px-3">Registrarse</a>
                     {% endif %}
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Contenedor de Mensajes Flash -->
+    <!-- Contenedor de Mensajes Flotantes -->
     <div class="container mt-3">
         {% if messages %}
             {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show rounded-3 border-0 shadow-sm" role="alert">
+                    <i class="bi bi-info-circle-fill me-2"></i>{{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             {% endfor %}
         {% endif %}
@@ -75,15 +237,19 @@
 
     <!-- Contenido Principal -->
     <main class="container my-4 flex-grow-1">
-        {% block content %}{% endblock %}
+        {% block content %}
+        {% endblock %}
     </main>
 
     <!-- Pie de Página -->
-    <footer class="bg-dark text-white py-4 mt-auto">
-        <div class="container text-center">
-<small>&copy; 2026 TechRental & Build - Arriendo de Computadores, Equipos y PCs a Medida.</small>        </div>
+    <footer class="py-4 text-center">
+        <div class="container">
+            <p class="mb-1 text-muted small">&copy; 2026 TechRental & Build - Arriendo de Computadores, Equipos y PCs a Medida.</p>
+            <small class="text-secondary opacity-50">Plataforma de Cotización y Venta Directa</small>
+        </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

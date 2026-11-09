@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="mb-4">
-    <h1 class="h3 fw-bold mb-1"><i class="bi bi-calculator text-warning me-2"></i>Resumen de Cotización y Compra</h1>
+    <h1 class="h3 fw-bold mb-1"><i class="bi bi-calculator text-info me-2"></i>Resumen de Cotización y Compra</h1>
     <p class="text-muted small">Simulación de arriendos por día o venta directa de equipos, con IVA y garantía.</p>
 </div>
 
@@ -14,7 +14,7 @@
         <i class="bi bi-laptop-fill text-muted display-1 mb-3"></i>
         <h3 class="fw-bold text-secondary">No hay equipos agregados</h3>
         <p class="text-muted mb-4">Explora nuestro catálogo para armar tu presupuesto de arriendo o compra de computadores.</p>
-        <a href="{% url 'inventario:lista' %}" class="btn btn-warning px-4 py-2 fw-bold text-dark">
+        <a href="{% url 'inventario:lista' %}" class="btn btn-primary px-4 py-2 fw-bold text-dark">
             <i class="bi bi-grid-3x3-gap me-2"></i>Ver Catálogo de Equipos
         </a>
     </div>
@@ -49,7 +49,7 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <a href="{% url 'inventario:detalle' item.slug %}" class="fw-bold text-dark text-decoration-none">
+                                <a href="{% url 'inventario:detalle' item.slug %}" class="fw-bold text-main text-decoration-none">
                                     {{ item.nombre }}
                                 </a>
                                 <small class="text-muted d-block">SKU: {{ item.sku }} | Unidades: {{ item.cantidad }}</small>
@@ -58,21 +58,21 @@
                                 {% if item.modalidad == 'venta' %}
                                     <span class="badge bg-success-subtle text-success border border-success-subtle fw-bold">Venta Directa</span>
                                 {% else %}
-                                    <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle fw-bold">Arriendo</span>
+                                    <span class="badge bg-info-subtle text-info border border-info-subtle fw-bold">Arriendo</span>
                                 {% endif %}
                             </td>
                             <td class="text-center">
                                 {% if item.modalidad == 'arriendo' %}
                                     <div class="btn-group btn-group-sm border rounded">
-                                        <a href="{% url 'cotizaciones:modificar_dias' item.id_key 'restar_dia' %}" class="btn btn-light px-2">-</a>
-                                        <span class="btn btn-light disabled text-dark fw-bold px-3">{{ item.dias }}d</span>
-                                        <a href="{% url 'cotizaciones:modificar_dias' item.id_key 'sumar_dia' %}" class="btn btn-light px-2">+</a>
+                                        <a href="{% url 'cotizaciones:modificar_dias' item.id_key 'restar_dia' %}" class="btn btn-outline-secondary px-2">-</a>
+                                        <span class="btn btn-outline-secondary disabled text-main fw-bold px-3">{{ item.dias }}d</span>
+                                        <a href="{% url 'cotizaciones:modificar_dias' item.id_key 'sumar_dia' %}" class="btn btn-outline-secondary px-2">+</a>
                                     </div>
                                 {% else %}
                                     <span class="text-muted small">1 Unidad</span>
                                 {% endif %}
                             </td>
-                            <td class="text-end fw-bold text-dark">${{ item.subtotal|floatformat:0 }} CLP</td>
+                            <td class="text-end fw-bold text-main">${{ item.subtotal|floatformat:0 }} CLP</td>
                             <td class="text-end">
                                 <a href="{% url 'cotizaciones:eliminar' item.id_key %}" class="text-danger" title="Eliminar equipo">
                                     <i class="bi bi-trash fs-5"></i>
@@ -98,7 +98,7 @@
     <!-- Desglose Económico -->
     <div class="col-lg-4">
         <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
-            <h5 class="fw-bold mb-3"><i class="bi bi-receipt me-2 text-warning"></i>Resumen de Presupuesto</h5>
+            <h5 class="fw-bold mb-3"><i class="bi bi-receipt me-2 text-info"></i>Resumen de Presupuesto</h5>
 
             <div class="d-flex justify-content-between text-muted mb-2">
                 <span>Subtotal Ítems:</span>
@@ -116,19 +116,19 @@
             <hr>
 
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <span class="fs-5 fw-bold text-dark">Total Estimado:</span>
-                <span class="fs-4 fw-bold text-dark">${{ total_final|floatformat:0 }} CLP</span>
+                <span class="fs-5 fw-bold text-main">Total Estimado:</span>
+                <span class="fs-4 fw-bold text-info">${{ total_final|floatformat:0 }} CLP</span>
             </div>
 
             {% if user.is_authenticated %}
-                <a href="{% url 'cotizaciones:comprobante' %}" class="btn btn-warning w-100 py-3 fw-bold text-dark shadow-sm">
+                <a href="{% url 'cotizaciones:comprobante' %}" class="btn btn-primary w-100 py-3 fw-bold text-dark shadow-sm">
                     <i class="bi bi-file-earmark-pdf me-2"></i>Emitir Solicitud / Comprobante
                 </a>
             {% else %}
-                <div class="alert alert-warning small mb-3">
+                <div class="alert alert-info small mb-3 border-0 bg-info-subtle text-info-emphasis">
                     <i class="bi bi-info-circle me-1"></i>Inicia sesión con tu cuenta para emitir la solicitud.
                 </div>
-                <a href="{% url 'usuarios:login' %}?next={% url 'cotizaciones:comprobante' %}" class="btn btn-warning w-100 py-3 fw-bold text-dark">
+                <a href="{% url 'usuarios:login' %}?next={% url 'cotizaciones:comprobante' %}" class="btn btn-primary w-100 py-3 fw-bold text-dark">
                     <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión para Reservar
                 </a>
             {% endif %}
