@@ -20,27 +20,27 @@
                     <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-0">
                         <div>
                             <strong>{{ item.nombre }}</strong> ({{ item.sku }})
-                            <span class="text-muted small d-block">Arriendo por {{ item.dias }} día(s) - Cant: {{ item.cantidad }} un.</span>
+                            <span class="text-muted small d-block">{% if item.modalidad == 'venta' %}Venta{% else %}Arriendo por {{ item.dias }} día(s){% endif %} - Cant: {{ item.cantidad }} un.</span>
                         </div>
-                        <span class="fw-bold">${{ item.subtotal|floatformat:0 }} CLP</span>
+                        <span class="fw-bold">${{ item.subtotal_fmt }} CLP</span>
                     </li>
                     {% endfor %}
                 </ul>
                 <div class="d-flex justify-content-between pt-2 border-top text-muted">
-                    <span>Subtotal Arriendo:</span>
-                    <span>${{ subtotal|floatformat:0 }} CLP</span>
+                    <span>Subtotal Ítems:</span>
+                    <span>${{ subtotal_fmt }} CLP</span>
                 </div>
                 <div class="d-flex justify-content-between text-muted">
                     <span>Garantía Reembolsable:</span>
-                    <span>${{ garantia|floatformat:0 }} CLP</span>
+                    <span>${{ garantia_fmt }} CLP</span>
                 </div>
                 <div class="d-flex justify-content-between text-muted">
                     <span>IVA (19%):</span>
-                    <span>${{ iva|floatformat:0 }} CLP</span>
+                    <span>${{ iva_fmt }} CLP</span>
                 </div>
                 <div class="d-flex justify-content-between fs-5 fw-bold text-dark pt-2 border-top mt-2">
                     <span>Total Presupuestado:</span>
-                    <span>${{ total|floatformat:0 }} CLP</span>
+                    <span>${{ total_fmt }} CLP</span>
                 </div>
             </div>
 

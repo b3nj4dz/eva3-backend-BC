@@ -282,3 +282,12 @@ footer {
     border-color: #059669 !important;
     box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
 }
+
+/* Ajuste uniforme para imágenes en Catálogo y Detalle */
+.product-image-container img,
+.card-img-top {
+    width: 100%;
+    max-height: 220px;
+    object-fit: contain; /* Mantiene la proporción sin deformar ni recortar la foto */
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+}

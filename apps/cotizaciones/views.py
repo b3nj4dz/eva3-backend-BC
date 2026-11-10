@@ -149,6 +149,7 @@ def comprobante_simulado(request):
     iva = int(subtotal_general * 0.19)
     total_final = subtotal_general + iva + total_garantia
     items_cotizados = list(cotizacion.values())
+    items_para_plantilla = [dict(i, subtotal_fmt=_fmt(i['subtotal'])) for i in items_cotizados]
 
     codigo_generado = f"COT-TR-{request.user.id}-{uuid.uuid4().hex[:6].upper()}"
     
@@ -175,7 +176,7 @@ def comprobante_simulado(request):
     request.session.modified = True
 
     return render(request, 'cotizaciones/comprobante_exito.html', {
-        'items': items_cotizados,
+        'items': items_para_plantilla,
         'subtotal_fmt': _fmt(subtotal_general),
         'garantia_fmt': _fmt(total_garantia),
         'iva_fmt': _fmt(iva),

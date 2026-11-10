@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}{{ equipo.nombre }} | TechRental & Build{% endblock %}
 
@@ -19,12 +20,26 @@
         <div class="row g-4 mb-4">
             <!-- Columna Izquierda: Fotografía -->
             <div class="col-md-5">
-                <div class="product-image-container p-3 shadow-sm text-center">
+                <div class="product-image-container p-3 shadow-sm text-center d-flex align-items-center justify-content-center h-100" style="min-height: 320px;">
                     {% if equipo.imagen %}
-                        <img src="{{ equipo.imagen.url }}" alt="{{ equipo.nombre }}" class="img-fluid rounded-3" style="max-height: 220px; object-fit: contain;">
+                        <img src="{{ equipo.imagen.url }}" alt="{{ equipo.nombre }}" class="img-fluid rounded-3" style="max-height: 280px; object-fit: contain;">
                     {% else %}
-                        <i class="bi bi-laptop text-muted display-4 glow-icon mb-2"></i>
-                        <span class="text-muted small d-block" style="font-size: 0.8rem;">Fotografía no disponible</span>
+                        {% with cat=equipo.categoria.nombre|lower %}
+                            {% if 'laptop' in cat or 'notebook' in cat %}
+                                <img src="{% static 'img/equipos/asus.jpg' %}" alt="{{ equipo.nombre }}" class="img-fluid rounded-3" style="max-height: 280px; object-fit: contain;">
+                            {% elif 'gamer' in cat or 'ensamblado' in cat %}
+                                <img src="{% static 'img/equipos/gamer.jpg' %}" alt="{{ equipo.nombre }}" class="img-fluid rounded-3" style="max-height: 280px; object-fit: contain;">
+                            {% elif 'workstation' in cat or 'rendimiento' in cat %}
+                                <img src="{% static 'img/equipos/workstation.jpg' %}" alt="{{ equipo.nombre }}" class="img-fluid rounded-3" style="max-height: 280px; object-fit: contain;">
+                            {% elif 'servidor' in cat or 'ti' in cat %}
+                                <img src="{% static 'img/equipos/servidor.jpg' %}" alt="{{ equipo.nombre }}" class="img-fluid rounded-3" style="max-height: 280px; object-fit: contain;">
+                            {% else %}
+                                <div class="text-center text-muted">
+                                    <i class="bi bi-cpu display-1 text-info opacity-50 mb-2"></i>
+                                    <p class="small mb-0">Fotografía no disponible</p>
+                                </div>
+                            {% endif %}
+                        {% endwith %}
                     {% endif %}
                 </div>
             </div>

@@ -9,5 +9,5 @@ urlpatterns = [
     path('modificar-dias/<str:id>/<str:accion>/', views.cotizacion_modificar_dias, name='modificar_dias'),
     path('eliminar/<str:id>/', views.cotizacion_eliminar, name='eliminar'),
     path('limpiar/', views.cotizacion_limpiar, name='limpiar'),
-    path('comprobante/', views.comprobante_simulado, name='comprobante'),
+    path('guardar/', views.comprobante_simulado, name='guardar'),
 ]
