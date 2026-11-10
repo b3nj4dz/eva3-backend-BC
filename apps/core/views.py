@@ -3,21 +3,17 @@ from apps.inventario.models import EquipoInformatico, CategoriaEquipo
 
 
 def inicio(request):
-    """Portada con equipos destacados y categorías de flota"""
-    destacados = EquipoInformatico.objects.filter(
-        activo=True, 
-        destacado=True
-    ).select_related('categoria')[:4]
-
-    categorias = CategoriaEquipo.objects.filter(activo=True)[:4]
+    # Consultar los equipos destacados que estén activos
+    equipos_destacados = EquipoInformatico.objects.filter(destacado=True, activo=True)[:6]
+    
+    # Consultar todas las categorías (sin el filtro activo=True)
+    categorias = CategoriaEquipo.objects.all()
 
     return render(request, 'core/index.html', {
-        'destacados': destacados,
+        'equipos_destacados': equipos_destacados,
         'categorias': categorias,
-        'total_equipos': EquipoInformatico.objects.filter(activo=True).count(),
     })
 
 
 def nosotros(request):
-    """Página sobre el servicio de leasing y arriendo corporativo"""
     return render(request, 'core/nosotros.html')

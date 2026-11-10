@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}Gestión de Inventario | TechRental & Build{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="h3 fw-bold mb-1"><i class="bi bi-sliders text-info me-2"></i>Gestión de Inventario y Flota</h1>
+        <p class="text-muted small mb-0">Panel de administración para agregar, modificar o dar de baja equipos.</p>
+    </div>
+    <a href="{% url 'inventario:crear' %}" class="btn btn-primary fw-bold text-dark">
+        <i class="bi bi-plus-circle me-1"></i>Ingresar Nuevo Equipo
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white mb-4">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col" style="width: 70px;">Foto</th>
+                    <th scope="col">SKU / Nombre</th>
+                    <th scope="col">Categoría</th>
+                    <th scope="col">Tarifa Diaria</th>
+                    <th scope="col">Precio Venta</th>
+                    <th scope="col" class="text-center">Stock</th>
+                    <th scope="col" class="text-center">Estado</th>
+                    <th scope="col" class="text-center">Activo</th>
+                    <th scope="col" class="text-end" style="width: 140px;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for equipo in equipos %}
+                <tr>
+                    <td>
+                        {% if equipo.imagen %}
+                            <img src="{{ equipo.imagen.url }}" alt="{{ equipo.nombre }}" class="rounded border" style="width: 48px; height: 48px; object-fit: cover;">
+                        {% else %}
+                            <div class="bg-dark rounded border text-center d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                                <i class="bi bi-cpu text-muted"></i>
+                            </div>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <strong class="text-main d-block">{{ equipo.nombre }}</strong>
+                        <small class="text-muted">SKU: {{ equipo.codigo_sku }}</small>
+                    </td>
+                    <td>
+                        <span class="badge bg-dark text-info border border-secondary">{{ equipo.categoria.nombre }}</span>
+                    </td>
+                    <td class="fw-bold text-info">{{ equipo.precio_formateado }} CLP</td>
+                    <td class="fw-bold text-success">{{ equipo.precio_venta_formateado }} CLP</td>
+                    <td class="text-center">
+                        <span class="badge bg-dark text-main border">{{ equipo.stock }} un.</span>
+                    </td>
+                    <td class="text-center">
+                        {% if equipo.estado == 'DISPONIBLE' %}
+                            <span class="badge bg-success-subtle text-success border border-success-subtle">Disponible</span>
+                        {% elif equipo.estado == 'EN_ARRIENDO' %}
+                            <span class="badge bg-info-subtle text-info border border-info-subtle">En Arriendo</span>
+                        {% else %}
+                            <span class="badge bg-secondary-subtle text-muted border border-secondary-subtle">{{ equipo.estado }}</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if equipo.activo %}
+                            <i class="bi bi-check-circle-fill text-success fs-5"></i>
+                        {% else %}
+                            <i class="bi bi-x-circle-fill text-danger fs-5"></i>
+                        {% endif %}
+                    </td>
+                    <td class="text-end">
+                        <div class="btn-group btn-group-sm">
+                            <a href="{% url 'inventario:editar' equipo.id %}" class="btn btn-outline-info" title="Editar Registro">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a href="{% url 'inventario:eliminar' equipo.id %}" class="btn btn-outline-danger" title="Dar de Baja" onclick="return confirm('¿Confirma la baja lógica de este equipo?');">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="9" class="text-center py-4 text-muted">
+                        No hay equipos registrados en la base de datos.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

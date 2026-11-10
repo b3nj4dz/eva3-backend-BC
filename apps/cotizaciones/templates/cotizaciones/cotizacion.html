@@ -1,139 +1,146 @@
 {% extends 'base.html' %}
 
-{% block title %}Presupuesto y Cotización | TechRental & Build{% endblock %}
+{% block title %}Resumen de Cotización | TechRental & Build{% endblock %}
 
 {% block content %}
-<div class="mb-4">
-    <h1 class="h3 fw-bold mb-1"><i class="bi bi-calculator text-info me-2"></i>Resumen de Cotización y Compra</h1>
-    <p class="text-muted small">Simulación de arriendos por día o venta directa de equipos, con IVA y garantía.</p>
+<div class="d-flex align-items-center gap-2 mb-2">
+    <i class="bi bi-calculator-fill text-info fs-3"></i>
+    <h1 class="h3 fw-bold text-white mb-0">Resumen de Cotización y Compra</h1>
 </div>
+<p class="text-muted small mb-4">Simulación de arriendos por día o venta directa de equipos, con IVA y garantía.</p>
 
-{% if esta_vacio %}
-<div class="card border-0 shadow-sm rounded-4 text-center py-5 bg-white">
-    <div class="card-body py-5">
-        <i class="bi bi-laptop-fill text-muted display-1 mb-3"></i>
-        <h3 class="fw-bold text-secondary">No hay equipos agregados</h3>
-        <p class="text-muted mb-4">Explora nuestro catálogo para armar tu presupuesto de arriendo o compra de computadores.</p>
-        <a href="{% url 'inventario:lista' %}" class="btn btn-primary px-4 py-2 fw-bold text-dark">
-            <i class="bi bi-grid-3x3-gap me-2"></i>Ver Catálogo de Equipos
-        </a>
-    </div>
-</div>
-{% else %}
 <div class="row g-4">
-    <!-- Tabla de Ítems en Sesión -->
+    <!-- Tabla de Ítems en la Canasta -->
     <div class="col-lg-8">
-        <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-3 bg-white">
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-dark">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
-                    <thead class="table-dark">
+                    <thead class="table-dark border-bottom border-secondary">
                         <tr>
-                            <th scope="col" style="width: 70px;">Foto</th>
+                            <th scope="col" style="width: 60px;">Foto</th>
                             <th scope="col">Equipo / SKU</th>
-                            <th scope="col">Modalidad</th>
-                            <th scope="col" class="text-center" style="width: 130px;">Días / Cant</th>
+                            <th scope="col" class="text-center">Modalidad</th>
+                            <th scope="col" class="text-center">Días / Cant</th>
                             <th scope="col" class="text-end">Subtotal</th>
-                            <th scope="col" class="text-end" style="width: 50px;"></th>
+                            <th scope="col" class="text-center" style="width: 50px;"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for item in items_cotizacion %}
-                        <tr>
-                            <td>
-                                {% if item.imagen_url %}
-                                    <img src="{{ item.imagen_url }}" alt="{{ item.nombre }}" class="rounded border" style="width: 48px; height: 48px; object-fit: cover;">
-                                {% else %}
-                                    <div class="bg-light rounded border text-center d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
-                                        <i class="bi bi-cpu text-muted"></i>
-                                    </div>
-                                {% endif %}
-                            </td>
-                            <td>
-                                <a href="{% url 'inventario:detalle' item.slug %}" class="fw-bold text-main text-decoration-none">
-                                    {{ item.nombre }}
-                                </a>
-                                <small class="text-muted d-block">SKU: {{ item.sku }} | Unidades: {{ item.cantidad }}</small>
-                            </td>
-                            <td>
-                                {% if item.modalidad == 'venta' %}
-                                    <span class="badge bg-success-subtle text-success border border-success-subtle fw-bold">Venta Directa</span>
-                                {% else %}
-                                    <span class="badge bg-info-subtle text-info border border-info-subtle fw-bold">Arriendo</span>
-                                {% endif %}
-                            </td>
-                            <td class="text-center">
-                                {% if item.modalidad == 'arriendo' %}
-                                    <div class="btn-group btn-group-sm border rounded">
-                                        <a href="{% url 'cotizaciones:modificar_dias' item.id_key 'restar_dia' %}" class="btn btn-outline-secondary px-2">-</a>
-                                        <span class="btn btn-outline-secondary disabled text-main fw-bold px-3">{{ item.dias }}d</span>
-                                        <a href="{% url 'cotizaciones:modificar_dias' item.id_key 'sumar_dia' %}" class="btn btn-outline-secondary px-2">+</a>
-                                    </div>
-                                {% else %}
-                                    <span class="text-muted small">1 Unidad</span>
-                                {% endif %}
-                            </td>
-                            <td class="text-end fw-bold text-main">${{ item.subtotal|floatformat:0 }} CLP</td>
-                            <td class="text-end">
-                                <a href="{% url 'cotizaciones:eliminar' item.id_key %}" class="text-danger" title="Eliminar equipo">
-                                    <i class="bi bi-trash fs-5"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        {% endfor %}
+                        {% if items %}
+                            {% for item in items %}
+                            <tr class="border-bottom border-secondary">
+                                <td>
+                                    {% if item.equipo.imagen %}
+                                        <img src="{{ item.equipo.imagen.url }}" alt="{{ item.equipo.nombre }}" class="rounded border border-secondary" style="width: 44px; height: 44px; object-fit: cover;">
+                                    {% else %}
+                                        <div class="bg-black rounded border border-secondary text-center d-flex align-items-center justify-content-center" style="width: 44px; height: 44px;">
+                                            <i class="bi bi-cpu text-muted"></i>
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <strong class="text-white d-block text-truncate" style="max-width: 220px;">{{ item.equipo.nombre }}</strong>
+                                    <small class="text-muted">SKU: {{ item.equipo.codigo_sku }} | Unidades: 1</small>
+                                </td>
+                                <td class="text-center">
+                                    {% if item.modalidad == 'arriendo' %}
+                                        <span class="badge bg-info-subtle text-info border border-info-subtle px-2 py-1">Arriendo</span>
+                                    {% else %}
+                                        <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Venta</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-center">
+                                    {% if item.modalidad == 'arriendo' %}
+                                        <form method="POST" action="{% url 'cotizaciones:actualizar' item.equipo.id %}" class="d-inline-flex align-items-center gap-1">
+                                            {% csrf_token %}
+                                            <button type="submit" name="dias" value="{{ item.dias_arriendo|add:'-1' }}" class="btn btn-sm btn-outline-secondary py-0 px-2 text-white" {% if item.dias_arriendo <= 1 %}disabled{% endif %}>-</button>
+                                            <span class="badge bg-dark border border-secondary px-2 py-1 text-white">{{ item.dias_arriendo }}d</span>
+                                            <button type="submit" name="dias" value="{{ item.dias_arriendo|add:'1' }}" class="btn btn-sm btn-outline-secondary py-0 px-2 text-white">+</button>
+                                        </form>
+                                    {% else %}
+                                        <span class="text-muted small">1 un.</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-end fw-bold text-info">
+                                    {{ item.subtotal_formateado }} CLP
+                                </td>
+                                <td class="text-center">
+                                    <a href="{% url 'cotizaciones:eliminar' item.equipo.id %}" class="text-danger fs-5" title="Eliminar ítem">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center py-5 text-muted">
+                                    <i class="bi bi-cart-x display-4 d-block mb-2 opacity-50"></i>
+                                    Tu cotizador está vacío actualmente.
+                                </td>
+                            </tr>
+                        {% endif %}
                     </tbody>
                 </table>
             </div>
 
-            <div class="card-footer bg-white p-3 d-flex justify-content-between align-items-center">
-                <a href="{% url 'inventario:lista' %}" class="btn btn-outline-secondary btn-sm">
+            <!-- Footer Oscuro de la Tarjeta Corregido -->
+            <div class="card-footer bg-dark border-top border-secondary p-3 d-flex justify-content-between align-items-center">
+                <a href="{% url 'inventario:lista' %}" class="btn btn-outline-info btn-sm">
                     <i class="bi bi-arrow-left me-1"></i>Seguir Viendo Equipos
                 </a>
-                <a href="{% url 'cotizaciones:limpiar' %}" class="btn btn-outline-danger btn-sm" onclick="return confirm('¿Deseas vaciar la cotización actual?');">
+                
+                {% if items %}
+                <a href="{% url 'cotizaciones:vaciar' %}" class="btn btn-outline-danger btn-sm" onclick="return confirm('¿Confirma que desea vaciar todos los ítems de la cotización?');">
                     <i class="bi bi-trash me-1"></i>Vaciar Cotizador
                 </a>
+                {% endif %}
             </div>
         </div>
     </div>
 
-    <!-- Desglose Económico -->
+    <!-- Resumen Financiero y Totales -->
     <div class="col-lg-4">
-        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
-            <h5 class="fw-bold mb-3"><i class="bi bi-receipt me-2 text-info"></i>Resumen de Presupuesto</h5>
+        <div class="card border-0 shadow-sm rounded-4 p-4 bg-dark">
+            <h5 class="fw-bold text-white mb-3 pb-2 border-bottom border-secondary">
+                <i class="bi bi-receipt text-info me-2"></i>Resumen de Presupuesto
+            </h5>
 
-            <div class="d-flex justify-content-between text-muted mb-2">
-                <span>Subtotal Ítems:</span>
-                <span>${{ subtotal_arriendo|floatformat:0 }} CLP</span>
-            </div>
-            <div class="d-flex justify-content-between text-muted mb-2">
-                <span>Garantía Reembolsable:</span>
-                <span>${{ total_garantia|floatformat:0 }} CLP</span>
-            </div>
-            <div class="d-flex justify-content-between text-muted mb-3">
-                <span>IVA (19% Legal):</span>
-                <span>${{ iva|floatformat:0 }} CLP</span>
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Subtotal Ítems:</span>
+                <span class="text-white fw-bold">{{ subtotal_formateado }} CLP</span>
             </div>
 
-            <hr>
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Garantía Reembolsable:</span>
+                <span class="text-white fw-bold">{{ garantia_formateada }} CLP</span>
+            </div>
+
+            <div class="d-flex justify-content-between mb-3 pb-3 border-bottom border-secondary">
+                <span class="text-muted">IVA (19% Legal):</span>
+                <span class="text-white fw-bold">{{ iva_formateado }} CLP</span>
+            </div>
 
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <span class="fs-5 fw-bold text-main">Total Estimado:</span>
-                <span class="fs-4 fw-bold text-info">${{ total_final|floatformat:0 }} CLP</span>
+                <span class="fs-5 fw-bold text-white">Total Estimado:</span>
+                <span class="fs-4 fw-bold text-info">{{ total_formateado }} CLP</span>
             </div>
 
-            {% if user.is_authenticated %}
-                <a href="{% url 'cotizaciones:comprobante' %}" class="btn btn-primary w-100 py-3 fw-bold text-dark shadow-sm">
-                    <i class="bi bi-file-earmark-pdf me-2"></i>Emitir Solicitud / Comprobante
-                </a>
+            {% if items %}
+                {% if user.is_authenticated %}
+                    <a href="{% url 'cotizaciones:guardar' %}" class="btn btn-primary btn-lg fw-bold text-dark w-100 shadow">
+                        <i class="bi bi-file-earmark-pdf me-2"></i>Emitir Solicitud / Comprobante
+                    </a>
+                {% else %}
+                    <a href="{% url 'usuarios:login' %}?next={% url 'cotizaciones:ver' %}" class="btn btn-warning btn-lg fw-bold text-dark w-100 shadow">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Inicia Sesión para Confirmar
+                    </a>
+                {% endif %}
             {% else %}
-                <div class="alert alert-info small mb-3 border-0 bg-info-subtle text-info-emphasis">
-                    <i class="bi bi-info-circle me-1"></i>Inicia sesión con tu cuenta para emitir la solicitud.
-                </div>
-                <a href="{% url 'usuarios:login' %}?next={% url 'cotizaciones:comprobante' %}" class="btn btn-primary w-100 py-3 fw-bold text-dark">
-                    <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión para Reservar
-                </a>
+                <button class="btn btn-secondary btn-lg w-100 fw-bold" disabled>
+                    Cotizador Vacío
+                </button>
             {% endif %}
         </div>
     </div>
 </div>
-{% endif %}
 {% endblock %}

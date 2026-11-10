@@ -1,0 +1,284 @@
+/**
+ * TechRental & Build - Theme Engine (Dark Tech Cyan)
+ */
+
+:root {
+    --bg-main: #0f172a;
+    --bg-card: #1e293b;
+    --bg-card-hover: #334155;
+    --brand-primary: #06b6d4;
+    --brand-primary-hover: #0891b2;
+    --brand-accent: #3b82f6;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border-color: #334155;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar personalizada */
+.navbar-tech {
+    background-color: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.navbar-brand-tech {
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #fff !important;
+}
+
+.navbar-brand-tech span {
+    color: var(--brand-primary);
+}
+
+.nav-link-tech {
+    color: var(--text-muted) !important;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.nav-link-tech:hover, 
+.nav-link-tech.active {
+    color: var(--brand-primary) !important;
+}
+
+/* Tarjetas y contenedores */
+.card {
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-main) !important;
+    border-radius: 1rem !important;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    border-color: var(--brand-primary) !important;
+    box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.15) !important;
+}
+
+/* Estilos de Menú Lateral de Categorías (Fix de visibilidad) */
+.list-group-tech-item {
+    background-color: #1e293b !important;
+    color: #cbd5e1 !important;
+    border-color: var(--border-color) !important;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.list-group-tech-item:hover {
+    background-color: #334155 !important;
+    color: var(--brand-primary) !important;
+}
+
+.list-group-tech-item.active {
+    background-color: var(--brand-primary) !important;
+    color: #0f172a !important;
+    font-weight: 700;
+    border-color: var(--brand-primary) !important;
+}
+
+/* Tipografía auxiliar */
+.text-main {
+    color: var(--text-main) !important;
+}
+
+.text-muted, 
+.text-secondary {
+    color: var(--text-muted) !important;
+}
+
+/* Botones personalizados */
+.btn-warning, 
+.btn-primary {
+    background-color: var(--brand-primary) !important;
+    border-color: var(--brand-primary) !important;
+    color: #0f172a !important;
+    font-weight: 700;
+    border-radius: 0.75rem;
+    transition: all 0.2s ease;
+}
+
+.btn-warning:hover, 
+.btn-primary:hover {
+    background-color: var(--brand-primary-hover) !important;
+    border-color: var(--brand-primary-hover) !important;
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+}
+
+.btn-outline-dark, 
+.btn-outline-secondary {
+    border-color: var(--border-color) !important;
+    color: var(--text-main) !important;
+    border-radius: 0.75rem;
+}
+
+.btn-outline-dark:hover, 
+.btn-outline-secondary:hover {
+    background-color: var(--bg-card-hover) !important;
+    border-color: var(--brand-primary) !important;
+    color: var(--brand-primary) !important;
+}
+
+/* Tablas oscuras */
+.table {
+    color: var(--text-main) !important;
+    --bs-table-bg: transparent;
+    --bs-table-border-color: var(--border-color);
+}
+
+.table-dark {
+    --bs-table-bg: #0f172a;
+}
+
+/* Formularios oscuros */
+.form-control, 
+.form-select {
+    background-color: #0f172a !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-main) !important;
+    border-radius: 0.75rem;
+}
+
+.form-control:focus, 
+.form-select:focus {
+    border-color: var(--brand-primary) !important;
+    box-shadow: 0 0 0 0.25rem rgba(6, 182, 212, 0.25) !important;
+}
+
+/* Footer */
+footer {
+    margin-top: auto;
+    background-color: #0b1120;
+    border-top: 1px solid var(--border-color);
+}
+
+/* ==========================================
+   Vista Nosotros (About Page)
+   ========================================== */
+.about-hero {
+    background: radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.15) 0%, rgba(15, 23, 42, 1) 75%);
+    border: 1px solid var(--border-color);
+}
+
+.glow-icon {
+    filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.4));
+}
+
+.value-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 1.25rem;
+    transition: all 0.3s ease;
+}
+
+.value-card:hover {
+    border-color: var(--brand-primary);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.2);
+}
+
+.icon-badge {
+    width: 55px;
+    height: 55px;
+    background: rgba(6, 182, 212, 0.1);
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ==========================================
+   Vista Perfil de Usuario (Profile Page)
+   ========================================== */
+.profile-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 1.25rem;
+}
+
+/* Fix para hacer visibles los íconos del Acordeón en fondo oscuro */
+.accordion-tech .accordion-item {
+    background-color: #0f172a !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 0.75rem !important;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+}
+
+.accordion-tech .accordion-button {
+    background-color: #0f172a !important;
+    color: var(--text-main) !important;
+    font-weight: 600;
+    box-shadow: none !important;
+}
+
+.accordion-tech .accordion-button:not(.collapsed) {
+    color: var(--brand-primary) !important;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Invierte el color del SVG de la flecha predeterminada de Bootstrap a Blanco/Cyan */
+.accordion-tech .accordion-button::after {
+    filter: invert(1) hue-rotate(180deg) brightness(1.5);
+}
+
+/* ==========================================
+   Vista Detalle de Equipo (Product Detail)
+   ========================================== */
+.detail-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 1.25rem;
+}
+
+/* Reducción de altura mínima y paddings */
+.product-image-container {
+    background-color: #0b1120;
+    border: 1px solid var(--border-color);
+    border-radius: 1.25rem;
+    height: 100%;
+    min-height: 260px; /* Reducido de 380px a 260px */
+    max-height: 380px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.price-box-tech {
+    background-color: #0f172a;
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    padding: 0.85rem; /* Padding más compacto */
+    text-align: center;
+    transition: border-color 0.2s ease;
+}
+
+.price-box-tech:hover {
+    border-color: var(--brand-primary);
+}
+
+.btn-buy-tech {
+    background-color: #10b981 !important;
+    border-color: #10b981 !important;
+    color: #0f172a !important;
+    font-weight: 700;
+    border-radius: 0.75rem;
+    transition: all 0.2s ease;
+}
+
+.btn-buy-tech:hover {
+    background-color: #059669 !important;
+    border-color: #059669 !important;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+}

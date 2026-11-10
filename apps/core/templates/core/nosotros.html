@@ -1,21 +1,77 @@
 {% extends 'base.html' %}
 
-{% block title %}Quiénes Somos | TechRental & Build{% endblock %}
+{% block title %}Sobre Nosotros | TechRental & Build{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-lg-10">
-        <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-5 bg-card">
-            <div class="bg-dark text-white p-5 text-center border-bottom">
-                <i class="bi bi-cpu text-info display-3 mb-2"></i>
-                <h1 class="fw-bold mb-2">Sobre TechRental & Build</h1>
-                <p class="lead text-muted opacity-75 mb-0">Soluciones computacionales para usuarios particulares, proyectos y empresas.</p>
+<!-- Hero Seccional -->
+<div class="about-hero rounded-4 p-4 p-md-5 mb-5 text-center shadow-lg position-relative overflow-hidden">
+    <div class="py-3">
+        <i class="bi bi-cpu text-info display-1 glow-icon d-inline-block mb-3"></i>
+        <h1 class="display-5 fw-extrabold text-white mb-3">Sobre TechRental & Build</h1>
+        <p class="lead text-muted col-lg-8 mx-auto opacity-75">
+            Soluciones computacionales de alto rendimiento para usuarios particulares, proyectos académicos, profesionales y empresas en todo Chile.
+        </p>
+    </div>
+</div>
+
+<!-- Propuesta de Valor y Pilares -->
+<div class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="value-card p-4 h-100">
+            <div class="icon-badge text-info mb-3">
+                <i class="bi bi-shield-check fs-2"></i>
             </div>
-            <div class="card-body p-4 p-md-5">
-                <h4 class="fw-bold mb-3 text-info">Nuestra Propuesta de Valor</h4>
-                <p class="text-muted lh-base">
-                    Proveemos la infraestructura computacional adecuada para proyectos temporales, eventos, estudio, gaming o soporte continuo. Contamos con un catálogo diverso que abarca desde notebooks de alta gama hasta estaciones de trabajo y equipos armados a medida.
-                </p>
+            <h5 class="fw-bold text-white mb-2">Equipos Certificados</h5>
+            <p class="text-muted small mb-0">Cada notebook, workstation o PC gamer pasa por rigurosas pruebas de esfuerzo, stress-test de hardware y sanitización antes de cada entrega.</p>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="value-card p-4 h-100">
+            <div class="icon-badge text-info mb-3">
+                <i class="bi bi-calculator fs-2"></i>
+            </div>
+            <h5 class="fw-bold text-white mb-2">Flexibilidad & Transparencia</h5>
+            <p class="text-muted small mb-0">Simulación transparente de arriendo por días o venta directa, con cálculo de IVA legal (19%) y garantía reembolsable clara desde el día uno.</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="value-card p-4 h-100">
+            <div class="icon-badge text-info mb-3">
+                <i class="bi bi-headset fs-2"></i>
+            </div>
+            <h5 class="fw-bold text-white mb-2">Soporte Continuo</h5>
+            <p class="text-muted small mb-0">Acompañamiento técnico especializado durante todo el periodo de arriendo para asegurar la continuidad de tus proyectos o eventos.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Sección Detallada -->
+<div class="card border-0 rounded-4 p-4 p-md-5 mb-5 bg-card">
+    <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+            <h3 class="fw-bold text-white mb-3">Nuestra Propuesta de Valor</h3>
+            <p class="text-muted mb-3">
+                Proveemos la infraestructura computacional adecuada para proyectos temporales, eventos corporativos, entregas universitarias, torneos gaming o soporte continuo.
+            </p>
+            <p class="text-muted mb-4">
+                Contamos con un catálogo diverso que abarca desde notebooks de alta gama hasta estaciones de trabajo multiprocesador y equipos ensamblados a medida según el requerimiento de procesamiento exigido.
+            </p>
+            <div class="d-flex gap-3">
+                <a href="{% url 'inventario:lista' %}" class="btn btn-primary fw-bold text-dark px-4">
+                    <i class="bi bi-grid-3x3-gap-fill me-1"></i>Ver Catálogo
+                </a>
+                <a href="{% url 'cotizaciones:ver' %}" class="btn btn-outline-dark px-4">
+                    <i class="bi bi-calculator me-1"></i>Cotizar Ahora
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-5 text-center">
+            <div class="p-4 rounded-4 bg-dark border border-secondary">
+                <h2 class="display-4 fw-bold text-info mb-1">100%</h2>
+                <span class="text-white fw-semibold d-block mb-2">Transparencia Operativa</span>
+                <small class="text-muted">Desglose inmediato de tarifas diarias, neto, IVA y garantía de respaldo.</small>
             </div>
         </div>
     </div>

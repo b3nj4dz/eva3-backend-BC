@@ -6,6 +6,11 @@ from apps.inventario.models import EquipoInformatico
 from .models import SolicitudCotizacion, ItemCotizacion
 
 
+def _fmt(valor):
+    """Función auxiliar para formatear números con punto de miles (ej: 399000 -> 399.000)"""
+    return f"{int(valor):,}".replace(",", ".")
+
+
 def _obtener_cotizacion(request):
     """Auxiliar para obtener o inicializar la cotización en sesión"""
     return request.session.setdefault('cotizacion', {})
@@ -20,12 +25,24 @@ def cotizacion_ver(request):
     iva = int(subtotal_general * 0.19)
     total_final = subtotal_general + iva + total_garantia
 
+    # Formatear elementos individuales para la plantilla
+    items_formateados = []
+    for item in cotizacion.values():
+        item_copy = item.copy()
+        item_copy['tarifa_diaria_fmt'] = _fmt(item['tarifa_diaria'])
+        item_copy['subtotal_fmt'] = _fmt(item['subtotal'])
+        items_formateados.append(item_copy)
+
     return render(request, 'cotizaciones/cotizacion.html', {
-        'items_cotizacion': cotizacion.values(),
+        'items_cotizacion': items_formateados,
         'subtotal_arriendo': subtotal_general,
+        'subtotal_arriendo_fmt': _fmt(subtotal_general),
         'total_garantia': total_garantia,
+        'total_garantia_fmt': _fmt(total_garantia),
         'iva': iva,
+        'iva_fmt': _fmt(iva),
         'total_final': total_final,
+        'total_final_fmt': _fmt(total_final),
         'esta_vacio': len(cotizacion) == 0,
     })
 
@@ -86,7 +103,6 @@ def cotizacion_modificar_dias(request, id, accion):
     item_key = str(id)
     
     if item_key in cotizacion:
-        # Solo permite modificar días si la modalidad es arriendo
         if cotizacion[item_key]['modalidad'] == 'arriendo':
             if accion == 'sumar_dia':
                 cotizacion[item_key]['dias'] += 1
@@ -121,7 +137,7 @@ def cotizacion_limpiar(request):
     return redirect('cotizaciones:ver')
 
 
-# 6. Comprobante Simulado (Guarda en la BD)
+# 6. Comprobante Simulado
 @login_required
 def comprobante_simulado(request):
     cotizacion = _obtener_cotizacion(request)
@@ -160,9 +176,9 @@ def comprobante_simulado(request):
 
     return render(request, 'cotizaciones/comprobante_exito.html', {
         'items': items_cotizados,
-        'subtotal': subtotal_general,
-        'garantia': total_garantia,
-        'iva': iva,
-        'total': total_final,
+        'subtotal_fmt': _fmt(subtotal_general),
+        'garantia_fmt': _fmt(total_garantia),
+        'iva_fmt': _fmt(iva),
+        'total_fmt': _fmt(total_final),
         'codigo_cotizacion': codigo_generado,
     })
