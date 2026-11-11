@@ -5,7 +5,7 @@ Plataforma web desarrollada en Django y Bootstrap 5 para la gestión de arriendo
 ## 📋 Ficha de Registro del Proyecto
 
 * **Nombre de la Organización:** TechRental & Build Chile
-* **Modelo de Negocio / Giro:** Arriendo de equipamiento informático para empresas y servicios de armado de PCs
+* **Modelo de Negocio / Giro:** Arriendo de equipamiento informático para empresas y usuarios 
 * **Integrantes del Equipo:** Benjamin Canales 21.788.262-1
 * **Entidad de Contexto / Agrupación (ORM):** `CategoriaEquipo`
 * **Entidad Principal Gestionable (ORM):** `EquipoInformatico`
