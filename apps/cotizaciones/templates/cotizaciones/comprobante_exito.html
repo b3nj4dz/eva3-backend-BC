@@ -31,17 +31,27 @@
                     <span>${{ subtotal_fmt }} CLP</span>
                 </div>
                 <div class="d-flex justify-content-between text-muted">
-                    <span>Garantía Reembolsable:</span>
+                    <span>Depósito en garantía (reembolsable):</span>
                     <span>${{ garantia_fmt }} CLP</span>
                 </div>
+                {% if total_garantia %}
+                <p class="text-muted small mb-2">Se devuelve al entregar el equipo en buen estado.</p>
+                {% endif %}
                 <div class="d-flex justify-content-between text-muted">
                     <span>IVA (19%):</span>
                     <span>${{ iva_fmt }} CLP</span>
                 </div>
+                <div class="d-flex justify-content-between text-muted pt-2">
+                    <span>Costo de equipos y arriendos (incluye IVA, sin depósito):</span>
+                    <span>${{ total_sin_deposito_fmt }} CLP</span>
+                </div>
                 <div class="d-flex justify-content-between fs-5 fw-bold text-dark pt-2 border-top mt-2">
-                    <span>Total Presupuestado:</span>
+                    <span>Pago inicial estimado:</span>
                     <span>${{ total_fmt }} CLP</span>
                 </div>
+                {% if total_garantia %}
+                <p class="text-muted small text-end mb-0 mt-2">Incluye el depósito reembolsable indicado arriba.</p>
+                {% endif %}
             </div>
 
             <div class="d-flex justify-content-center gap-3">

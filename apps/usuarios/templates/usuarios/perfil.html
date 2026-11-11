@@ -8,21 +8,16 @@
         
         <!-- Tarjeta de Datos Personales -->
         <div class="profile-card p-4 p-md-5 mb-4 shadow-sm">
-            <div class="d-flex align-items-center gap-3 mb-4 border-bottom border-secondary pb-3">
-                <div class="bg-dark text-info p-3 rounded-circle border border-info">
-                    <i class="bi bi-person-circle fs-2"></i>
-                </div>
-                <div>
-                    <h3 class="fw-bold text-white mb-0">{{ user.username }}</h3>
-                    <small class="text-muted">Perfil de Cliente Registrado</small>
-                </div>
+            <div class="d-flex align-items-center justify-content-center gap-3 mb-4 border-bottom border-secondary pb-3">
+                <i class="bi bi-person-circle text-info fs-2"></i>
+                <h3 class="fw-bold text-white mb-0">{{ user.username }}</h3>
             </div>
 
             <div class="table-responsive">
                 <table class="table table-borderless align-middle mb-0">
                     <tbody>
                         <tr>
-                            <td class="text-muted fw-semibold" style="width: 200px;"><i class="bi bi-envelope me-2 text-info"></i>Correo Electrónico:</td>
+                            <td class="text-muted fw-semibold profile-label"><i class="bi bi-envelope me-2 text-info"></i>Correo Electrónico:</td>
                             <td class="text-white fw-bold">{{ user.email|default:"No registrado" }}</td>
                         </tr>
                         <tr>
@@ -73,7 +68,7 @@
                                 <li class="list-group-item bg-dark text-main border-secondary d-flex justify-content-between align-items-center">
                                     <div>
                                         <strong class="text-white">{{ item.nombre_equipo }}</strong>
-                                        <small class="text-muted d-block">SKU: {{ item.codigo_sku }} | {{ item.cantidad }} un. | {{ item.dias }} día(s)</small>
+                                        <small class="text-muted d-block">SKU: {{ item.codigo_sku }} | {{ item.cantidad }} un.{% if item.es_arriendo %} | {{ item.dias }} día(s){% endif %}</small>
                                     </div>
                                     <span class="fw-bold text-info">{{ item.subtotal_item_fmt }} CLP</span>
                                 </li>
@@ -81,9 +76,11 @@
                             </ul>
 
                             <div class="p-3 rounded-3 bg-card border border-secondary text-end">
-                                <small class="text-muted me-3">Garantía: <strong>{{ cot.garantia_fmt }} CLP</strong></small>
+                                <small class="text-muted me-3">Costo sin depósito: <strong>{{ cot.total_sin_deposito_fmt }} CLP</strong></small>
+                                <small class="text-muted me-3">Depósito reembolsable: <strong>{{ cot.garantia_fmt }} CLP</strong></small>
                                 <small class="text-muted me-3">IVA (19%): <strong>{{ cot.iva_fmt }} CLP</strong></small>
-                                <span class="fs-6 fw-bold text-info">Total: {{ cot.total_fmt }} CLP</span>
+                                <span class="fs-6 fw-bold text-info">Pago inicial: {{ cot.total_fmt }} CLP</span>
+                                {% if cot.garantia %}<small class="text-muted d-block mt-2">El depósito se devuelve al entregar el equipo en buen estado.</small>{% endif %}
                             </div>
                         </div>
                     </div>

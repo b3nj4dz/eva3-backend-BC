@@ -18,7 +18,7 @@
         <table class="table table-hover align-middle mb-0">
             <thead class="table-dark">
                 <tr>
-                    <th scope="col" style="width: 70px;">Foto</th>
+                    <th scope="col" class="inventory-photo-column">Foto</th>
                     <th scope="col">SKU / Nombre</th>
                     <th scope="col">Categoría</th>
                     <th scope="col">Tarifa Diaria</th>
@@ -26,7 +26,7 @@
                     <th scope="col" class="text-center">Stock</th>
                     <th scope="col" class="text-center">Estado</th>
                     <th scope="col" class="text-center">Activo</th>
-                    <th scope="col" class="text-end" style="width: 140px;">Acciones</th>
+                    <th scope="col" class="text-end inventory-actions-column">Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,9 +34,9 @@
                 <tr>
                     <td>
                         {% if equipo.imagen %}
-                            <img src="{{ equipo.imagen.url }}" alt="{{ equipo.nombre }}" class="rounded border" style="width: 48px; height: 48px; object-fit: cover;">
+                            <img src="{{ equipo.imagen.url }}" alt="{{ equipo.nombre }}" class="equipment-image-thumbnail rounded border">
                         {% else %}
-                            <div class="bg-dark rounded border text-center d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                            <div class="equipment-image-thumbnail bg-dark rounded border text-center d-flex align-items-center justify-content-center">
                                 <i class="bi bi-cpu text-muted"></i>
                             </div>
                         {% endif %}
@@ -54,12 +54,10 @@
                         <span class="badge bg-dark text-main border">{{ equipo.stock }} un.</span>
                     </td>
                     <td class="text-center">
-                        {% if equipo.estado == 'DISPONIBLE' %}
+                        {% if equipo.estado == 'DISPONIBLE' and equipo.stock > 0 %}
                             <span class="badge bg-success-subtle text-success border border-success-subtle">Disponible</span>
-                        {% elif equipo.estado == 'EN_ARRIENDO' %}
-                            <span class="badge bg-info-subtle text-info border border-info-subtle">En Arriendo</span>
                         {% else %}
-                            <span class="badge bg-secondary-subtle text-muted border border-secondary-subtle">{{ equipo.estado }}</span>
+                            <span class="badge bg-secondary-subtle text-muted border border-secondary-subtle">No disponible</span>
                         {% endif %}
                     </td>
                     <td class="text-center">
@@ -74,7 +72,7 @@
                             <a href="{% url 'inventario:editar' equipo.id %}" class="btn btn-outline-info" title="Editar Registro">
                                 <i class="bi bi-pencil"></i>
                             </a>
-                            <a href="{% url 'inventario:eliminar' equipo.id %}" class="btn btn-outline-danger" title="Dar de Baja" onclick="return confirm('¿Confirma la baja lógica de este equipo?');">
+                            <a href="{% url 'inventario:eliminar' equipo.id %}" class="btn btn-outline-danger" title="Dar de Baja" data-confirm="¿Confirma la baja lógica de este equipo?">
                                 <i class="bi bi-trash"></i>
                             </a>
                         </div>

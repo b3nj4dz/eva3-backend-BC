@@ -24,4 +24,22 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // Enviar automáticamente formularios de filtros cuando cambia su selector.
+    document.querySelectorAll('[data-auto-submit]').forEach((control) => {
+        control.addEventListener('change', () => {
+            control.form?.requestSubmit();
+        });
+    });
+
+    // Confirmar acciones destructivas configuradas desde la plantilla.
+    document.addEventListener('click', (event) => {
+        const target = event.target instanceof Element
+            ? event.target.closest('[data-confirm]')
+            : null;
+
+        if (target && !window.confirm(target.dataset.confirm)) {
+            event.preventDefault();
+        }
+    });
 });

@@ -20,19 +20,19 @@
         <div class="row g-4 mb-4">
             <!-- Columna Izquierda: Fotografía -->
             <div class="col-md-5">
-                <div class="product-image-container p-3 shadow-sm text-center d-flex align-items-center justify-content-center h-100" style="min-height: 320px;">
+                <div class="equipment-image-frame product-image-container shadow-sm">
                     {% if equipo.imagen %}
-                        <img src="{{ equipo.imagen.url }}" alt="{{ equipo.nombre }}" class="img-fluid rounded-3" style="max-height: 280px; object-fit: contain;">
+                        <img src="{{ equipo.imagen.url }}" alt="{{ equipo.nombre }}" class="equipment-image rounded-3">
                     {% else %}
                         {% with cat=equipo.categoria.nombre|lower %}
                             {% if 'laptop' in cat or 'notebook' in cat %}
-                                <img src="{% static 'img/equipos/asus.jpg' %}" alt="{{ equipo.nombre }}" class="img-fluid rounded-3" style="max-height: 280px; object-fit: contain;">
+                                <img src="{% static 'img/equipos/asus.jpg' %}" alt="{{ equipo.nombre }}" class="equipment-image rounded-3">
                             {% elif 'gamer' in cat or 'ensamblado' in cat %}
-                                <img src="{% static 'img/equipos/gamer.jpg' %}" alt="{{ equipo.nombre }}" class="img-fluid rounded-3" style="max-height: 280px; object-fit: contain;">
+                                <img src="{% static 'img/equipos/gamer.jpg' %}" alt="{{ equipo.nombre }}" class="equipment-image rounded-3">
                             {% elif 'workstation' in cat or 'rendimiento' in cat %}
-                                <img src="{% static 'img/equipos/workstation.jpg' %}" alt="{{ equipo.nombre }}" class="img-fluid rounded-3" style="max-height: 280px; object-fit: contain;">
+                                <img src="{% static 'img/equipos/workstation.jpg' %}" alt="{{ equipo.nombre }}" class="equipment-image rounded-3">
                             {% elif 'servidor' in cat or 'ti' in cat %}
-                                <img src="{% static 'img/equipos/servidor.jpg' %}" alt="{{ equipo.nombre }}" class="img-fluid rounded-3" style="max-height: 280px; object-fit: contain;">
+                                <img src="{% static 'img/equipos/servidor.jpg' %}" alt="{{ equipo.nombre }}" class="equipment-image rounded-3">
                             {% else %}
                                 <div class="text-center text-muted">
                                     <i class="bi bi-cpu display-1 text-info opacity-50 mb-2"></i>
@@ -58,7 +58,7 @@
                         <h1 class="h4 fw-bold text-white mb-3">{{ equipo.nombre }}</h1>
 
                         <!-- Especificaciones Técnicas -->
-                        <div class="p-3 rounded-3 bg-dark border border-secondary mb-3">
+                        <div class="p-3 rounded-3 specifications-panel border border-secondary mb-3">
                             <h6 class="fw-bold text-info mb-1 small">
                                 <i class="bi bi-cpu me-1"></i>Especificaciones Técnicas:
                             </h6>
@@ -69,33 +69,34 @@
                         <div class="row g-2 mb-3">
                             <div class="col-6">
                                 <div class="price-box-tech text-center p-2">
-                                    <span class="text-muted small d-block" style="font-size: 0.75rem;">Arriendo por Día</span>
+                                    <span class="text-muted small d-block price-label">Arriendo por Día</span>
                                     <h5 class="fw-bold text-info mb-0">{{ equipo.precio_formateado }} CLP</h5>
-                                    <small class="text-muted opacity-75" style="font-size: 0.7rem;">+ IVA / Garantía</small>
+                                    <small class="text-muted opacity-75 price-note">+ IVA / Depósito reembolsable</small>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="price-box-tech text-center p-2">
-                                    <span class="text-muted small d-block" style="font-size: 0.75rem;">Venta Directa</span>
+                                    <span class="text-muted small d-block price-label">Venta Directa</span>
                                     <h5 class="fw-bold text-success mb-0">{{ equipo.precio_venta_formateado }} CLP</h5>
-                                    <small class="text-muted opacity-75" style="font-size: 0.7rem;">Pago Único</small>
+                                    <small class="text-muted opacity-75 price-note">Pago Único</small>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Estado y Stock -->
                         <div class="d-flex gap-2 mb-3">
-                            <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1 fw-bold small">
-                                <i class="bi bi-check-circle me-1"></i>Stock: {{ equipo.stock }} un.
+                            <span class="badge {% if equipo.estado == 'DISPONIBLE' and equipo.stock > 0 %}bg-success-subtle text-success border-success-subtle{% else %}bg-secondary-subtle text-muted border-secondary-subtle{% endif %} border px-2 py-1 fw-bold small">
+                                <i class="bi {% if equipo.estado == 'DISPONIBLE' and equipo.stock > 0 %}bi-check-circle{% else %}bi-x-circle{% endif %} me-1"></i>Stock: {{ equipo.stock }} un.
                             </span>
-                            <span class="badge bg-info-subtle text-info border border-info-subtle px-2 py-1 fw-bold small">
-                                Estado: {{ equipo.estado }}
+                            <span class="badge {% if equipo.estado == 'DISPONIBLE' and equipo.stock > 0 %}bg-dark text-info border-info{% else %}bg-secondary text-white border-secondary{% endif %} border px-2 py-1 fw-bold small">
+                                Estado: {% if equipo.estado == 'DISPONIBLE' and equipo.stock > 0 %}Disponible{% else %}No disponible{% endif %}
                             </span>
                         </div>
                     </div>
 
                     <!-- Botones de Acción -->
                     <div class="d-grid gap-2 pt-2 border-top border-secondary">
+                        {% if equipo.estado == 'DISPONIBLE' and equipo.stock > 0 %}
                         <a href="{% url 'cotizaciones:agregar' equipo.id %}?modalidad=arriendo" class="btn btn-primary btn-sm fw-bold text-dark shadow py-2">
                             <i class="bi bi-clock-history me-2"></i>Cotizar Arriendo por Días
                         </a>
@@ -103,8 +104,13 @@
                         <a href="{% url 'cotizaciones:agregar' equipo.id %}?modalidad=venta" class="btn btn-buy-tech btn-sm shadow py-2">
                             <i class="bi bi-bag-check me-2"></i>Comprar Equipo Directo
                         </a>
+                        {% else %}
+                        <div class="alert alert-secondary text-center mb-0" role="status">
+                            Este equipo no está disponible
+                        </div>
+                        {% endif %}
 
-                        <a href="{% url 'inventario:lista' %}" class="btn btn-outline-secondary btn-sm mt-1 py-1" style="font-size: 0.8rem;">
+                        <a href="{% url 'inventario:lista' %}" class="btn btn-outline-secondary btn-sm mt-1 py-1 detail-back-button">
                             <i class="bi bi-arrow-left me-1"></i>Volver al Catálogo
                         </a>
                     </div>
@@ -122,10 +128,10 @@
                     <div class="card h-100 border rounded-3 overflow-hidden shadow-sm">
                         <div class="card-body p-2 px-3 d-flex justify-content-between align-items-center">
                             <div>
-                                <h6 class="fw-bold text-white mb-0 text-truncate small" style="max-width: 140px;">{{ rel.nombre }}</h6>
-                                <span class="text-info fw-bold" style="font-size: 0.75rem;">{{ rel.precio_formateado }} CLP/día</span>
+                                <h6 class="fw-bold text-white mb-0 text-truncate small related-equipment-name">{{ rel.nombre }}</h6>
+                                <span class="text-info fw-bold related-equipment-price">{{ rel.precio_formateado }} CLP/día</span>
                             </div>
-                            <a href="{% url 'inventario:detalle' rel.slug %}" class="btn btn-outline-info btn-sm py-0 px-2" style="font-size: 0.75rem;">Ver</a>
+                            <a href="{% url 'inventario:detalle' rel.slug %}" class="btn btn-outline-info btn-sm py-0 px-2 related-equipment-button">Ver</a>
                         </div>
                     </div>
                 </div>

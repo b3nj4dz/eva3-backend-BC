@@ -7,6 +7,7 @@ urlpatterns = [
     path('', views.cotizacion_ver, name='ver'),
     path('agregar/<int:id>/', views.cotizacion_agregar, name='agregar'),
     path('modificar-dias/<str:id>/<str:accion>/', views.cotizacion_modificar_dias, name='modificar_dias'),
+    path('modificar-cantidad/<str:id>/<str:accion>/', views.cotizacion_modificar_cantidad, name='modificar_cantidad'),
     path('eliminar/<str:id>/', views.cotizacion_eliminar, name='eliminar'),
     path('limpiar/', views.cotizacion_limpiar, name='limpiar'),
     path('guardar/', views.comprobante_simulado, name='guardar'),

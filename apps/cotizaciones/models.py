@@ -36,6 +36,10 @@ class SolicitudCotizacion(models.Model):
     def garantia_fmt(self):
         return f"{int(self.garantia):,}".replace(",", ".")
 
+    @property
+    def total_sin_deposito_fmt(self):
+        return f"{int(self.subtotal + self.iva):,}".replace(",", ".")
+
 
 class ItemCotizacion(models.Model):
     solicitud = models.ForeignKey(SolicitudCotizacion, on_delete=models.CASCADE, related_name="items")
@@ -51,6 +55,10 @@ class ItemCotizacion(models.Model):
 
     def __str__(self):
         return f"{self.nombre_equipo} (x{self.cantidad})"
+
+    @property
+    def es_arriendo(self):
+        return self.nombre_equipo.endswith("(Arriendo)")
 
     @property
     def subtotal_item_fmt(self):

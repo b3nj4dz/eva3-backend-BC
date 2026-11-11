@@ -14,6 +14,10 @@
     --border-color: #334155;
 }
 
+.text-brand-primary {
+    color: var(--brand-primary) !important;
+}
+
 body {
     font-family: 'Inter', sans-serif;
     background-color: var(--bg-main);
@@ -241,18 +245,132 @@ footer {
     border-radius: 1.25rem;
 }
 
+.specifications-panel {
+    background-color: var(--bg-main);
+}
+
 /* Reducción de altura mínima y paddings */
 .product-image-container {
     background-color: #0b1120;
     border: 1px solid var(--border-color);
     border-radius: 1.25rem;
-    height: 100%;
-    min-height: 260px; /* Reducido de 380px a 260px */
-    max-height: 380px;
+}
+
+.equipment-image-frame {
+    position: relative;
     display: flex;
-    flex-direction: column;
+    width: 100%;
+    height: 180px;
+    min-height: 180px;
+    max-height: 180px;
+    flex: 0 0 180px;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
+    background-color: #0b1120;
+}
+
+.equipment-image {
+    width: 100%;
+    height: 100%;
+    flex: 0 0 100%;
+    object-fit: contain;
+}
+
+.equipment-image-thumbnail {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+}
+
+.hero-container {
+    background: radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.12) 0%, rgba(15, 23, 42, 1) 70%);
+    border: 1px solid var(--border-color);
+}
+
+.tech-glow {
+    filter: drop-shadow(0 0 25px rgba(6, 182, 212, 0.35));
+}
+
+.hero-icon {
+    font-size: 11rem;
+}
+
+.feature-card {
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--brand-primary) !important;
+    box-shadow: 0 12px 30px -10px rgba(6, 182, 212, 0.25) !important;
+}
+
+.chip-icon-box {
+    width: 60px;
+    height: 60px;
+    background: rgba(6, 182, 212, 0.1);
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.equipment-description-clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.price-unit-label,
+.price-label {
+    font-size: 0.75rem;
+}
+
+.price-note {
+    font-size: 0.7rem;
+}
+
+.detail-back-button {
+    font-size: 0.8rem;
+}
+
+.related-equipment-name {
+    max-width: 140px;
+}
+
+.related-equipment-price,
+.related-equipment-button {
+    font-size: 0.75rem;
+}
+
+.profile-label {
+    width: 200px;
+}
+
+.quote-photo-column {
+    width: 60px;
+}
+
+.quote-action-column {
+    width: 50px;
+}
+
+.quote-item-name {
+    max-width: 220px;
+}
+
+.inventory-photo-column {
+    width: 70px;
+}
+
+.inventory-actions-column {
+    width: 140px;
 }
 
 .price-box-tech {
@@ -283,11 +401,6 @@ footer {
     box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
 }
 
-/* Ajuste uniforme para imágenes en Catálogo y Detalle */
-.product-image-container img,
-.card-img-top {
-    width: 100%;
-    max-height: 220px;
-    object-fit: contain; /* Mantiene la proporción sin deformar ni recortar la foto */
+.product-image-container img {
     filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
 }

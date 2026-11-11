@@ -7,6 +7,7 @@ class CategoriaEquipo(models.Model):
     nombre = models.CharField(max_length=100, unique=True, verbose_name="Nombre de Categoría")
     slug = models.SlugField(max_length=120, unique=True, blank=True)
     descripcion = models.TextField(blank=True, verbose_name="Descripción")
+    activo = models.BooleanField(default=True, verbose_name="¿Categoría Activa?")
 
     class Meta:
         verbose_name = "Categoría de Equipo"
@@ -25,9 +26,7 @@ class CategoriaEquipo(models.Model):
 class EquipoInformatico(models.Model):
     ESTADO_CHOICES = [
         ('DISPONIBLE', 'Disponible'),
-        ('EN_ARRIENDO', 'En Arriendo'),
-        ('MANTENCION', 'En Mantención'),
-        ('RESERVADO', 'Reservado'),
+        ('NO_DISPONIBLE', 'No disponible'),
     ]
 
     codigo_sku = models.CharField(max_length=50, unique=True, verbose_name="Código SKU")
@@ -71,6 +70,15 @@ class EquipoInformatico(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(f"{self.codigo_sku}-{self.nombre}")
+
+        if self.estado == 'NO_DISPONIBLE' or self.stock == 0:
+            self.estado = 'NO_DISPONIBLE'
+            self.stock = 0
+
+        update_fields = kwargs.get('update_fields')
+        if update_fields is not None:
+            kwargs['update_fields'] = set(update_fields) | {'estado', 'stock'}
+
         super().save(*args, **kwargs)
 
     def __str__(self):
